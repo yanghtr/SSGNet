@@ -80,6 +80,8 @@ class Detector3DTemplate(nn.Module):
         model_info_dict['num_point_features'] = backbone_3d_module.num_point_features
         model_info_dict['backbone_channels'] = backbone_3d_module.backbone_channels \
             if hasattr(backbone_3d_module, 'backbone_channels') else None
+        model_info_dict['num_bev_features'] = backbone_3d_module.num_bev_features \
+            if hasattr(backbone_3d_module, 'num_bev_features') else None
         return backbone_3d_module, model_info_dict
 
     def build_map_to_bev_module(self, model_info_dict):

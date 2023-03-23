@@ -121,6 +121,9 @@ class DataProcessor(object):
             # to avoid pickling issues in multiprocess spawn
             return partial(self.transform_points_to_voxels, config=config)
 
+        if config.MAX_POINTS_PER_VOXEL == -1:
+            return data_dict
+ 
         if self.voxel_generator is None:
             self.voxel_generator = VoxelGeneratorWrapper(
                 vsize_xyz=config.VOXEL_SIZE,
@@ -131,10 +134,7 @@ class DataProcessor(object):
             )
 
         points = data_dict['points']
-
-        if config.MAX_POINTS_PER_VOXEL == -1:
-            return data_dict
-        
+       
         voxel_output = self.voxel_generator.generate(points)
         voxels, coordinates, num_points = voxel_output
 

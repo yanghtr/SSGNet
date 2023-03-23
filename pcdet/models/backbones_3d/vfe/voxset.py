@@ -6,8 +6,12 @@ from .vfe_template import VFETemplate
 import torch_scatter
 
 import math
-import spconv
+try:
+    import spconv.pytorch as spconv
+except:
+    import spconv as spconv
 
+# N in the comments of this file means \sum_{N_i}, where N_i is the number of points in the i-th batch
 
 class MLP(nn.Module):
     """ Very simple multi-layer perceptron (also called FFN)"""
@@ -83,7 +87,7 @@ class VoxSeT(VFETemplate):
         coords01x = points[:, :4].clone()
         coords01x[:, 1:4] = points_offsets // self.voxel_size
         pe_raw = (points_offsets - coords01x[:, 1:4] * self.voxel_size  ) / self.voxel_size
-        coords01x, inverse01x = torch.unique(coords01x, return_inverse=True, dim=0)
+        coords01x, inverse01x = torch.unique(coords01x, return_inverse=True, dim=0) # torch.max(inverse01x) == coords01x.shape[0] - 1
 
         coords02x = points[:, :4].clone()
         coords02x[:, 1:4] = points_offsets // self.voxel_size_02x
@@ -98,18 +102,18 @@ class VoxSeT(VFETemplate):
         coords08x, inverse08x = torch.unique(coords08x, return_inverse=True, dim=0)
 
 
-        src = self.input_embed(points[:, 1:]) 
+        src = self.input_embed(points[:, 1:]) # points: (N, 5)[:, 1:] -> (N, 16)
 
-        src = src + self.pe0(pe_raw)
-        src = self.mlp_vsa_layer_0(src, inverse01x, coords01x, self.grid_size)
+        src = src + self.pe0(pe_raw) # (N, 16)
+        src = self.mlp_vsa_layer_0(src, inverse01x, coords01x, self.grid_size) # (N, 32)
 
-        src = src + self.pe1(pe_raw)
+        src = src + self.pe1(pe_raw) # (N, 32)
         src = self.mlp_vsa_layer_1(src, inverse02x, coords02x, self.grid_size_02x)
 
-        src = src + self.pe2(pe_raw)
+        src = src + self.pe2(pe_raw) # (N, 64)
         src = self.mlp_vsa_layer_2(src, inverse04x, coords04x, self.grid_size_04x)
 
-        src = src + self.pe3(pe_raw)
+        src = src + self.pe3(pe_raw) # (N, 128)
         src = self.mlp_vsa_layer_3(src, inverse08x, coords08x, self.grid_size_08x)
 
         src = self.post_mlp(src)
@@ -142,7 +146,7 @@ class MLP_VSA_Layer(nn.Module):
         )
 
         # the learnable latent codes can be obsorbed by the linear projection
-        self.score = nn.Linear(dim, n_latents)
+        self.score = nn.Linear(dim, n_latents) # The same as cross-attention
 
         
 
@@ -169,28 +173,28 @@ class MLP_VSA_Layer(nn.Module):
         
     def forward(self, inp, inverse, coords, bev_shape):
         
-        x = self.pre_mlp(inp)
+        x = self.pre_mlp(inp) # (N, 16*t), t=1,2,4,8
 
         # encoder
-        attn = torch_scatter.scatter_softmax(self.score(x), inverse, dim=0)
-        dot = (attn[:, :, None] * x.view(-1, 1, self.dim)).view(-1, self.dim*self.k)
-        x_ = torch_scatter.scatter_sum(dot, inverse, dim=0)
+        attn = torch_scatter.scatter_softmax(self.score(x), inverse, dim=0) # (N, n_latents=8)
+        dot = (attn[:, :, None] * x.view(-1, 1, self.dim)).view(-1, self.dim*self.k) # (N, n_latents*(16*t))
+        x_ = torch_scatter.scatter_sum(dot, inverse, dim=0) # (N0, 128*t), N0: #voxels
 
         # conv ffn
         batch_size = int(coords[:, 0].max() + 1)
-        h = spconv.SparseConvTensor(F.relu(x_), coords.int(), bev_shape, batch_size).dense().squeeze(-1)
-        h = self.conv_ffn(h).permute(0,2,3,1).contiguous().view(-1, self.conv_dim)
-        flatten_indices = coords[:, 0] * bev_shape[0] * bev_shape[1] + coords[:, 1] * bev_shape[1] + coords[:, 2]
-        h = h[flatten_indices.long(), :] 
-        h = h[inverse, :]
+        h = spconv.SparseConvTensor(F.relu(x_), coords.int(), bev_shape, batch_size).dense().squeeze(-1) # (B, 128*t, 216/t, 248/t)
+        h = self.conv_ffn(h).permute(0,2,3,1).contiguous().view(-1, self.conv_dim) # (BHW, 128*t)
+        flatten_indices = coords[:, 0] * bev_shape[0] * bev_shape[1] + coords[:, 1] * bev_shape[1] + coords[:, 2] # (N0,)
+        h = h[flatten_indices.long(), :]  # (N0, 128*t)
+        h = h[inverse, :] # (N, 128*t)
        
         # decoder
-        hs = self.norm(h.view(-1,  self.dim)).view(-1, self.k, self.dim)
-        hs = self.mhsa(x.view(-1, 1, self.dim), hs, hs)[0]
-        hs = hs.view(-1, self.dim)
+        hs = self.norm(h.view(-1,  self.dim)).view(-1, self.k, self.dim) # (N, n_latents=8, self.dim=16*t)
+        hs = self.mhsa(x.view(-1, 1, self.dim), hs, hs)[0] # Q: (N, 1, 16*t), K/V: (N, 8, 16*t) --> (N, 1, 16*t)
+        hs = hs.view(-1, self.dim) # (N, 16*t)
         
         # skip connection
-        return torch.cat([inp, hs], dim=-1)
+        return torch.cat([inp, hs], dim=-1) # (N, 32*t)
         
        
 
@@ -210,7 +214,7 @@ class PositionalEncodingFourier(nn.Module):
         
 
     def forward(self, pos_embed, max_len=(1, 1, 1)):
-        z_embed, y_embed, x_embed = pos_embed.chunk(3, 1)
+        z_embed, y_embed, x_embed = pos_embed.chunk(3, 1) # (N, 1)
         z_max, y_max, x_max = max_len
         
         eps = 1e-6
@@ -219,22 +223,22 @@ class PositionalEncodingFourier(nn.Module):
         x_embed = x_embed / (x_max + eps) * self.scale
 
         dim_t = torch.arange(self.hidden_dim, dtype=torch.float32, device=pos_embed.device)
-        dim_t = self.temperature ** (2 * (dim_t // 2) / self.hidden_dim)
+        dim_t = self.temperature ** (2 * (dim_t // 2) / self.hidden_dim) # (64, )
 
-        pos_x = x_embed / dim_t
+        pos_x = x_embed / dim_t # (N, 64)
         pos_y = y_embed / dim_t
         pos_z = z_embed / dim_t
 
         pos_x = torch.stack((pos_x[:, 0::2].sin(),
-                             pos_x[:, 1::2].cos()), dim=2).flatten(1)
+                             pos_x[:, 1::2].cos()), dim=2).flatten(1) # (N, 64)
         pos_y = torch.stack((pos_y[:, 0::2].sin(),
                              pos_y[:, 1::2].cos()), dim=2).flatten(1)
         pos_z = torch.stack((pos_z[:, 0::2].sin(),
                              pos_z[:, 1::2].cos()), dim=2).flatten(1)
 
-        pos = torch.cat((pos_z, pos_y, pos_x), dim=1)
+        pos = torch.cat((pos_z, pos_y, pos_x), dim=1) # (N, 64+64+64)
 
-        pos = self.token_projection(pos)
+        pos = self.token_projection(pos) # (N, dim)
         return pos   
 
 

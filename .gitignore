@@ -25,3 +25,4 @@
 .vscode/
 build/
 output/
+pcdet.egg-info/

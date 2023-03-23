@@ -32,11 +32,14 @@ class CenterPoint(Detector3DTemplate):
             **tb_dict
         }
         
+        loss = loss_rpn
         if hasattr(self, 'point_head') and self.point_head is not None:
             loss_point, tb_dict = self.point_head.get_loss(tb_dict)
-            loss = loss_rpn + loss_point
-        else:
-            loss = loss_rpn
+            loss += loss_point
+
+        if hasattr(self, 'backbone_3d') and hasattr(self.backbone_3d, 'get_loss'):
+            loss_backbone3d, tb_dict = self.backbone_3d.get_loss(tb_dict)
+            loss += loss_backbone3d
 
         return loss, tb_dict, disp_dict
 

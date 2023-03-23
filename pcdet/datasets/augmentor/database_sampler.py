@@ -195,7 +195,7 @@ class DataBaseSampler(object):
             sampled_gt_boxes[:, 0:7], extra_width=self.sampler_cfg.REMOVE_EXTRA_WIDTH
         )
         points = box_utils.remove_points_in_boxes3d(points, large_sampled_gt_boxes)
-        points = np.concatenate([obj_points, points], axis=0)
+        points = np.concatenate([obj_points[:, :points.shape[-1]], points], axis=0)
         gt_names = np.concatenate([gt_names, sampled_gt_names], axis=0)
         gt_boxes = np.concatenate([gt_boxes, sampled_gt_boxes], axis=0)
         data_dict['gt_boxes'] = gt_boxes
@@ -236,7 +236,7 @@ class DataBaseSampler(object):
                 valid_sampled_dict = [sampled_dict[x] for x in valid_mask]
                 valid_sampled_boxes = sampled_boxes[valid_mask]
 
-                existed_boxes = np.concatenate((existed_boxes, valid_sampled_boxes), axis=0)
+                existed_boxes = np.concatenate((existed_boxes, valid_sampled_boxes[:, :existed_boxes.shape[-1]]), axis=0)
                 total_valid_sampled_dict.extend(valid_sampled_dict)
 
         sampled_gt_boxes = existed_boxes[gt_boxes.shape[0]:, :]
