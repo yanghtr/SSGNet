@@ -1,0 +1,763 @@
+2022-12-09 02:31:59,469   INFO  **********************Start logging**********************
+2022-12-09 02:31:59,469   INFO  CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+2022-12-09 02:31:59,470   INFO  total_batch_size: 16
+2022-12-09 02:31:59,470   INFO  cfg_file         cfgs/waymo_models/gen2DSS/centerpoint_voxset_1x_gen2dss_hybrid_train100_testSI1_lr0006_smpW1.yaml
+2022-12-09 02:31:59,471   INFO  batch_size       2
+2022-12-09 02:31:59,471   INFO  epochs           30
+2022-12-09 02:31:59,471   INFO  workers          4
+2022-12-09 02:31:59,471   INFO  extra_tag        default
+2022-12-09 02:31:59,471   INFO  ckpt             None
+2022-12-09 02:31:59,471   INFO  pretrained_model None
+2022-12-09 02:31:59,471   INFO  launcher         slurm
+2022-12-09 02:31:59,471   INFO  tcp_port         33715
+2022-12-09 02:31:59,471   INFO  sync_bn          False
+2022-12-09 02:31:59,471   INFO  fix_random_seed  False
+2022-12-09 02:31:59,471   INFO  ckpt_save_interval 1
+2022-12-09 02:31:59,471   INFO  local_rank       0
+2022-12-09 02:31:59,472   INFO  max_ckpt_save_num 30
+2022-12-09 02:31:59,472   INFO  merge_all_iters_to_one_epoch False
+2022-12-09 02:31:59,472   INFO  set_cfgs         None
+2022-12-09 02:31:59,472   INFO  max_waiting_mins 0
+2022-12-09 02:31:59,472   INFO  start_epoch      0
+2022-12-09 02:31:59,472   INFO  num_epochs_to_eval 0
+2022-12-09 02:31:59,472   INFO  save_to_file     False
+2022-12-09 02:31:59,472   INFO  cfg.ROOT_DIR: /scratch/cluster/yanght/Projects/Amazon/OpenPCDet/BEVGen/Baseline/VoxSeT_exp/VoxSeT_dev3
+2022-12-09 02:31:59,472   INFO  cfg.LOCAL_RANK: 0
+2022-12-09 02:31:59,472   INFO  cfg.CLASS_NAMES: ['Vehicle', 'Pedestrian', 'Cyclist']
+2022-12-09 02:31:59,472   INFO  
+cfg.DATA_CONFIG = edict()
+2022-12-09 02:31:59,472   INFO  cfg.DATA_CONFIG.DATASET: WaymoDataset
+2022-12-09 02:31:59,472   INFO  cfg.DATA_CONFIG.DATA_PATH: /scratch/cluster/yanght/Dataset/Project_Dataset/Detection/waymo/
+2022-12-09 02:31:59,472   INFO  cfg.DATA_CONFIG.PROCESSED_DATA_TAG: waymo_processed_data_v0_5_0
+2022-12-09 02:31:59,472   INFO  cfg.DATA_CONFIG.NUM_SWEEPS: 1
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [-74.24, -74.24, -2, 74.24, 74.24, 4.0]
+2022-12-09 02:31:59,473   INFO  
+cfg.DATA_CONFIG.DATA_SPLIT = edict()
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val
+2022-12-09 02:31:59,473   INFO  
+cfg.DATA_CONFIG.SAMPLED_INTERVAL = edict()
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.SAMPLED_INTERVAL.train: 1
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.SAMPLED_INTERVAL.test: 1
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.FILTER_EMPTY_BOXES_FOR_TRAIN: True
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.DISABLE_NLZ_FLAG_ON_POINTS: True
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.USE_SHARED_MEMORY: False
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.SHARED_MEMORY_FILE_LIMIT: 35000
+2022-12-09 02:31:59,473   INFO  
+cfg.DATA_CONFIG.DATA_AUGMENTOR = edict()
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['placeholder']
+2022-12-09 02:31:59,473   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'USE_ROAD_PLANE': False, 'DB_INFO_PATH': ['waymo_processed_data_v0_5_0_waymo_dbinfos_train_sampled_1.pkl'], 'USE_SHARED_MEMORY': False, 'DB_DATA_PATH': ['waymo_processed_data_v0_5_0_gt_database_train_sampled_1_global.npy'], 'PREPARE': {'filter_by_min_points': ['Vehicle:5', 'Pedestrian:5', 'Cyclist:5'], 'filter_by_difficulty': [-1]}, 'SAMPLE_GROUPS': ['Vehicle:15', 'Pedestrian:10', 'Cyclist:10'], 'NUM_POINT_FEATURES': 5, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': True}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x', 'y']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.78539816, 0.78539816]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2022-12-09 02:31:59,473   INFO  
+cfg.DATA_CONFIG.POINT_FEATURE_ENCODING = edict()
+2022-12-09 02:31:59,474   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2022-12-09 02:31:59,474   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity', 'elongation']
+2022-12-09 02:31:59,474   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity', 'elongation']
+2022-12-09 02:31:59,474   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'shuffle_points', 'SHUFFLE_ENABLED': {'train': True, 'test': True}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.32, 0.32, 6.0], 'MAX_POINTS_PER_VOXEL': 20, 'MAX_NUMBER_OF_VOXELS': {'train': 150000, 'test': 150000}}, {'NAME': 'sample_points', 'AT_MOST': True, 'NUM_POINTS': {'train': 80826, 'test': 80826}}]
+2022-12-09 02:31:59,474   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/waymo_dataset.yaml
+2022-12-09 02:31:59,474   INFO  
+cfg.MODEL = edict()
+2022-12-09 02:31:59,474   INFO  cfg.MODEL.NAME: CenterPoint
+2022-12-09 02:31:59,474   INFO  
+cfg.MODEL.VFE = edict()
+2022-12-09 02:31:59,474   INFO  cfg.MODEL.VFE.NAME: VoxSeT
+2022-12-09 02:31:59,474   INFO  cfg.MODEL.VFE.INPUT_DIM: 16
+2022-12-09 02:31:59,474   INFO  cfg.MODEL.VFE.NUM_LATENTS: [4, 4, 4, 4]
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.VFE.OUTPUT_DIM: 128
+2022-12-09 02:31:59,475   INFO  
+cfg.MODEL.BACKBONE_3D = edict()
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.BACKBONE_3D.NAME: PillarRes18BackBone8xHybridRefineBEV
+2022-12-09 02:31:59,475   INFO  
+cfg.MODEL.BACKBONE_3D.EXP_SEG = edict()
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.BACKBONE_3D.EXP_SEG.NAME: UNet2D
+2022-12-09 02:31:59,475   INFO  
+cfg.MODEL.BACKBONE_3D.EXP_SEG.LOSS_CONFIG = edict()
+2022-12-09 02:31:59,475   INFO  
+cfg.MODEL.BACKBONE_3D.EXP_SEG.LOSS_CONFIG.LOSS_WEIGHTS = edict()
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.BACKBONE_3D.EXP_SEG.LOSS_CONFIG.LOSS_WEIGHTS.bev_weight: 1.0
+2022-12-09 02:31:59,475   INFO  
+cfg.MODEL.BACKBONE_3D.IMP_SEG = edict()
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.BACKBONE_3D.IMP_SEG.NAME: ImplicitNet2d
+2022-12-09 02:31:59,475   INFO  
+cfg.MODEL.BACKBONE_3D.IMP_SEG.LOSS_CONFIG = edict()
+2022-12-09 02:31:59,475   INFO  
+cfg.MODEL.BACKBONE_3D.IMP_SEG.LOSS_CONFIG.LOSS_WEIGHTS = edict()
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.BACKBONE_3D.IMP_SEG.LOSS_CONFIG.LOSS_WEIGHTS.smp_weight: 1.0
+2022-12-09 02:31:59,475   INFO  
+cfg.MODEL.POINT_HEAD = edict()
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.POINT_HEAD.NAME: PointHeadSimple
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.POINT_HEAD.CLS_FC: [128, 128]
+2022-12-09 02:31:59,475   INFO  cfg.MODEL.POINT_HEAD.PART_FC: []
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.POINT_HEAD.CLASS_AGNOSTIC: True
+2022-12-09 02:31:59,476   INFO  
+cfg.MODEL.POINT_HEAD.TARGET_CONFIG = edict()
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.POINT_HEAD.TARGET_CONFIG.GT_EXTRA_WIDTH: [0.1, 0.1, 0.1]
+2022-12-09 02:31:59,476   INFO  
+cfg.MODEL.POINT_HEAD.LOSS_CONFIG = edict()
+2022-12-09 02:31:59,476   INFO  
+cfg.MODEL.POINT_HEAD.LOSS_CONFIG.LOSS_WEIGHTS = edict()
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.POINT_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.point_cls_weight: 1.0
+2022-12-09 02:31:59,476   INFO  
+cfg.MODEL.BACKBONE_2D = edict()
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [3, 3]
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [1, 2]
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [128, 128]
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2]
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [128, 128]
+2022-12-09 02:31:59,476   INFO  
+cfg.MODEL.DENSE_HEAD = edict()
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.DENSE_HEAD.NAME: CenterHead
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2022-12-09 02:31:59,476   INFO  cfg.MODEL.DENSE_HEAD.CLASS_NAMES_EACH_HEAD: [['Vehicle', 'Pedestrian', 'Cyclist']]
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SHARED_CONV_CHANNEL: 64
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.USE_BIAS_BEFORE_NORM: True
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.NUM_HM_CONV: 2
+2022-12-09 02:31:59,477   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG = edict()
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_ORDER: ['center', 'center_z', 'dim', 'rot']
+2022-12-09 02:31:59,477   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT = edict()
+2022-12-09 02:31:59,477   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center = edict()
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center.out_channels: 2
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center.num_conv: 2
+2022-12-09 02:31:59,477   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center_z = edict()
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center_z.out_channels: 1
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center_z.num_conv: 2
+2022-12-09 02:31:59,477   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.dim = edict()
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.dim.out_channels: 3
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.dim.num_conv: 2
+2022-12-09 02:31:59,477   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.rot = edict()
+2022-12-09 02:31:59,477   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.rot.out_channels: 2
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.rot.num_conv: 2
+2022-12-09 02:31:59,478   INFO  
+cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG = edict()
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.FEATURE_MAP_STRIDE: 1
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NUM_MAX_OBJS: 500
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.GAUSSIAN_OVERLAP: 0.1
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MIN_RADIUS: 2
+2022-12-09 02:31:59,478   INFO  
+cfg.MODEL.DENSE_HEAD.LOSS_CONFIG = edict()
+2022-12-09 02:31:59,478   INFO  
+cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS = edict()
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2022-12-09 02:31:59,478   INFO  
+cfg.MODEL.DENSE_HEAD.POST_PROCESSING = edict()
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.SCORE_THRESH: 0.1
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.POST_CENTER_LIMIT_RANGE: [-80, -80, -10.0, 80, 80, 10.0]
+2022-12-09 02:31:59,478   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.MAX_OBJ_PER_SAMPLE: 500
+2022-12-09 02:31:59,478   INFO  
+cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG = edict()
+2022-12-09 02:31:59,479   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2022-12-09 02:31:59,479   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.7
+2022-12-09 02:31:59,479   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 4096
+2022-12-09 02:31:59,479   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 500
+2022-12-09 02:31:59,479   INFO  
+cfg.MODEL.POST_PROCESSING = edict()
+2022-12-09 02:31:59,479   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2022-12-09 02:31:59,479   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: waymo
+2022-12-09 02:31:59,479   INFO  
+cfg.OPTIMIZATION = edict()
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 2
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 30
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.LR: 0.006
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.PCT_START: 0.4
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [35, 45]
+2022-12-09 02:31:59,479   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2022-12-09 02:31:59,480   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2022-12-09 02:31:59,480   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2022-12-09 02:31:59,480   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2022-12-09 02:31:59,480   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2022-12-09 02:31:59,480   INFO  cfg.TAG: centerpoint_voxset_1x_gen2dss_hybrid_train100_testSI1_lr0006_smpW1
+2022-12-09 02:31:59,480   INFO  cfg.EXP_GROUP_PATH: waymo_models/gen2DSS
+2022-12-09 02:32:25,808   INFO  Database filter by min points Vehicle: 1194368 => 1019923
+2022-12-09 02:32:25,996   INFO  Database filter by min points Pedestrian: 1114091 => 943716
+2022-12-09 02:32:26,022   INFO  Database filter by min points Cyclist: 53344 => 47529
+2022-12-09 02:32:26,280   INFO  Database filter by difficulty Vehicle: 1019923 => 1019923
+2022-12-09 02:32:26,518   INFO  Database filter by difficulty Pedestrian: 943716 => 943716
+2022-12-09 02:32:26,529   INFO  Database filter by difficulty Cyclist: 47529 => 47529
+2022-12-09 02:32:27,027   INFO  Loading Waymo dataset
+2022-12-09 02:34:43,257   INFO  Total skipped info 0
+2022-12-09 02:34:43,258   INFO  Total samples for Waymo dataset: 158081
+2022-12-09 02:34:43,258   INFO  prepairing pose table for multi-sweeps data
+2022-12-09 02:34:50,694   INFO  DistributedDataParallel(
+  (module): CenterPoint(
+    (vfe): VoxSeT(
+      (input_embed): MLP(
+        (layers): ModuleList(
+          (0): Linear(in_features=5, out_features=16, bias=True)
+          (1): Linear(in_features=16, out_features=16, bias=True)
+        )
+      )
+      (pe0): PositionalEncodingFourier(
+        (token_projection): Linear(in_features=192, out_features=16, bias=True)
+      )
+      (pe1): PositionalEncodingFourier(
+        (token_projection): Linear(in_features=192, out_features=32, bias=True)
+      )
+      (pe2): PositionalEncodingFourier(
+        (token_projection): Linear(in_features=192, out_features=64, bias=True)
+      )
+      (pe3): PositionalEncodingFourier(
+        (token_projection): Linear(in_features=192, out_features=128, bias=True)
+      )
+      (mlp_vsa_layer_0): MLP_VSA_Layer(
+        (pre_mlp): Sequential(
+          (0): Linear(in_features=16, out_features=16, bias=True)
+          (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Linear(in_features=16, out_features=16, bias=True)
+          (4): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (5): ReLU()
+          (6): Linear(in_features=16, out_features=16, bias=True)
+          (7): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        )
+        (score): Linear(in_features=16, out_features=4, bias=True)
+        (conv_ffn): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64, bias=False)
+          (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64, bias=False)
+          (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU()
+          (6): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        )
+        (norm): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (mhsa): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=16, out_features=16, bias=True)
+        )
+      )
+      (mlp_vsa_layer_1): MLP_VSA_Layer(
+        (pre_mlp): Sequential(
+          (0): Linear(in_features=32, out_features=32, bias=True)
+          (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Linear(in_features=32, out_features=32, bias=True)
+          (4): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (5): ReLU()
+          (6): Linear(in_features=32, out_features=32, bias=True)
+          (7): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        )
+        (score): Linear(in_features=32, out_features=4, bias=True)
+        (conv_ffn): Sequential(
+          (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128, bias=False)
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128, bias=False)
+          (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU()
+          (6): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        )
+        (norm): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (mhsa): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=32, out_features=32, bias=True)
+        )
+      )
+      (mlp_vsa_layer_2): MLP_VSA_Layer(
+        (pre_mlp): Sequential(
+          (0): Linear(in_features=64, out_features=64, bias=True)
+          (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Linear(in_features=64, out_features=64, bias=True)
+          (4): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (5): ReLU()
+          (6): Linear(in_features=64, out_features=64, bias=True)
+          (7): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        )
+        (score): Linear(in_features=64, out_features=4, bias=True)
+        (conv_ffn): Sequential(
+          (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256, bias=False)
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256, bias=False)
+          (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU()
+          (6): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        )
+        (norm): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (mhsa): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=64, out_features=64, bias=True)
+        )
+      )
+      (mlp_vsa_layer_3): MLP_VSA_Layer(
+        (pre_mlp): Sequential(
+          (0): Linear(in_features=128, out_features=128, bias=True)
+          (1): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Linear(in_features=128, out_features=128, bias=True)
+          (4): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (5): ReLU()
+          (6): Linear(in_features=128, out_features=128, bias=True)
+          (7): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        )
+        (score): Linear(in_features=128, out_features=4, bias=True)
+        (conv_ffn): Sequential(
+          (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512, bias=False)
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512, bias=False)
+          (4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU()
+          (6): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        )
+        (norm): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (mhsa): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=128, out_features=128, bias=True)
+        )
+      )
+      (post_mlp): Sequential(
+        (0): Linear(in_features=256, out_features=128, bias=True)
+        (1): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+        (3): Linear(in_features=128, out_features=128, bias=True)
+        (4): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (5): ReLU()
+        (6): Linear(in_features=128, out_features=128, bias=True)
+        (7): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+      )
+    )
+    (backbone_3d): PillarRes18BackBone8xHybridRefineBEV(
+      (conv_collapse_exp): SparseSequential(
+        (0): SparseConv2d(128, 128, kernel_size=[3, 3], stride=[1, 1], padding=[1, 1], dilation=[1, 1], output_padding=[0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (unet2d): UNet2D(
+        (inc): DoubleConv(
+          (double_conv): Sequential(
+            (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+            (2): ReLU(inplace=True)
+            (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+            (5): ReLU(inplace=True)
+          )
+        )
+        (down1): Down(
+          (maxpool_conv): Sequential(
+            (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+            (1): DoubleConv(
+              (double_conv): Sequential(
+                (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                (2): ReLU(inplace=True)
+                (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (4): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                (5): ReLU(inplace=True)
+              )
+            )
+          )
+        )
+        (down2): Down(
+          (maxpool_conv): Sequential(
+            (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+            (1): DoubleConv(
+              (double_conv): Sequential(
+                (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (1): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                (2): ReLU(inplace=True)
+                (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (4): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                (5): ReLU(inplace=True)
+              )
+            )
+          )
+        )
+        (down3): Down(
+          (maxpool_conv): Sequential(
+            (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+            (1): DoubleConv(
+              (double_conv): Sequential(
+                (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (1): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                (2): ReLU(inplace=True)
+                (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (4): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                (5): ReLU(inplace=True)
+              )
+            )
+          )
+        )
+        (down4): Down(
+          (maxpool_conv): Sequential(
+            (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+            (1): DoubleConv(
+              (double_conv): Sequential(
+                (0): Conv2d(512, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (1): BatchNorm2d(1024, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                (2): ReLU(inplace=True)
+                (3): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (4): BatchNorm2d(1024, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                (5): ReLU(inplace=True)
+              )
+            )
+          )
+        )
+        (up1): Up(
+          (up): ConvTranspose2d(1024, 512, kernel_size=(2, 2), stride=(2, 2))
+          (conv): DoubleConv(
+            (double_conv): Sequential(
+              (0): Conv2d(1024, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+              (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (4): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (5): ReLU(inplace=True)
+            )
+          )
+        )
+        (up2): Up(
+          (up): ConvTranspose2d(512, 256, kernel_size=(2, 2), stride=(2, 2))
+          (conv): DoubleConv(
+            (double_conv): Sequential(
+              (0): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+              (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (4): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (5): ReLU(inplace=True)
+            )
+          )
+        )
+        (up3): Up(
+          (up): ConvTranspose2d(256, 128, kernel_size=(2, 2), stride=(2, 2))
+          (conv): DoubleConv(
+            (double_conv): Sequential(
+              (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+              (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (4): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (5): ReLU(inplace=True)
+            )
+          )
+        )
+        (up4): Up(
+          (up): ConvTranspose2d(128, 64, kernel_size=(2, 2), stride=(2, 2))
+          (conv): DoubleConv(
+            (double_conv): Sequential(
+              (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+              (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (4): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (5): ReLU(inplace=True)
+            )
+          )
+        )
+        (outc): OutConv(
+          (conv): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (conv_mask_exp): DoubleConv(
+        (double_conv): Sequential(
+          (0): Conv2d(1, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (4): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+      (conv_merge_mask_exp): Sequential(
+        (0): Sequential(
+          (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (1): Sequential(
+          (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+      (conv_collapse_imp): SparseSequential(
+        (0): SparseConv2d(128, 128, kernel_size=[3, 3], stride=[1, 1], padding=[1, 1], dilation=[1, 1], output_padding=[0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_down_3to4_imp): Sequential(
+        (0): Sequential(
+          (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (1): Sequential(
+          (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+      (implicit_net2d): ImplicitNet2d(
+        (encoder): MultiScaleEncoder2D(
+          (conv_input): DoubleConv(
+            (double_conv): Sequential(
+              (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+              (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (4): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+              (5): ReLU(inplace=True)
+            )
+          )
+          (down1): Down(
+            (maxpool_conv): Sequential(
+              (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+              (1): DoubleConv(
+                (double_conv): Sequential(
+                  (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                  (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                  (2): ReLU(inplace=True)
+                  (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                  (4): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                  (5): ReLU(inplace=True)
+                )
+              )
+            )
+          )
+          (down2): Down(
+            (maxpool_conv): Sequential(
+              (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+              (1): DoubleConv(
+                (double_conv): Sequential(
+                  (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                  (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                  (2): ReLU(inplace=True)
+                  (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                  (4): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                  (5): ReLU(inplace=True)
+                )
+              )
+            )
+          )
+          (down3): Down(
+            (maxpool_conv): Sequential(
+              (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+              (1): DoubleConv(
+                (double_conv): Sequential(
+                  (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                  (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                  (2): ReLU(inplace=True)
+                  (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                  (4): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+                  (5): ReLU(inplace=True)
+                )
+              )
+            )
+          )
+        )
+        (decoder): Sequential(
+          (0): Linear(in_features=448, out_features=128, bias=True)
+          (1): ReLU()
+          (2): Linear(in_features=128, out_features=128, bias=True)
+          (3): ReLU()
+          (4): Linear(in_features=128, out_features=128, bias=True)
+          (5): ReLU()
+          (6): Linear(in_features=128, out_features=1, bias=True)
+        )
+      )
+      (conv_mask_imp): DoubleConv(
+        (double_conv): Sequential(
+          (0): Conv2d(1, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (4): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+      (conv_merge_mask_imp): Sequential(
+        (0): Sequential(
+          (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+      (conv_merge_bev): Sequential(
+        (0): Sequential(
+          (0): Conv2d(384, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+      (cls_loss_func): SigmoidFocalClassificationLoss()
+    )
+    (map_to_bev_module): None
+    (pfe): None
+    (backbone_2d): BaseBEVBackbone(
+      (blocks): ModuleList(
+        (0): Sequential(
+          (0): ZeroPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), bias=False)
+          (2): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (3): ReLU()
+          (4): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (5): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (6): ReLU()
+          (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (8): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (9): ReLU()
+          (10): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (11): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (12): ReLU()
+        )
+        (1): Sequential(
+          (0): ZeroPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (1): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), bias=False)
+          (2): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (3): ReLU()
+          (4): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (5): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (6): ReLU()
+          (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (8): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (9): ReLU()
+          (10): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (11): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (12): ReLU()
+        )
+      )
+      (deblocks): ModuleList(
+        (0): Sequential(
+          (0): ConvTranspose2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (1): Sequential(
+          (0): ConvTranspose2d(128, 128, kernel_size=(2, 2), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+    )
+    (dense_head): CenterHead(
+      (shared_conv): Sequential(
+        (0): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (heads_list): ModuleList(
+        (0): SeparateHead(
+          (center): Sequential(
+            (0): Sequential(
+              (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU()
+            )
+            (1): Conv2d(64, 2, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+          (center_z): Sequential(
+            (0): Sequential(
+              (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU()
+            )
+            (1): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+          (dim): Sequential(
+            (0): Sequential(
+              (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU()
+            )
+            (1): Conv2d(64, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+          (rot): Sequential(
+            (0): Sequential(
+              (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU()
+            )
+            (1): Conv2d(64, 2, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+          (hm): Sequential(
+            (0): Sequential(
+              (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU()
+            )
+            (1): Conv2d(64, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+      )
+      (hm_loss_func): FocalLossCenterNet()
+      (reg_loss_func): RegLossCenterNet()
+    )
+    (point_head): PointHeadSimple(
+      (cls_loss_func): SigmoidFocalClassificationLoss()
+      (cls_layers): Sequential(
+        (0): Linear(in_features=128, out_features=128, bias=False)
+        (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+        (3): Linear(in_features=128, out_features=128, bias=False)
+        (4): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU()
+        (6): Linear(in_features=128, out_features=1, bias=True)
+      )
+    )
+    (roi_head): None
+  )
+)
+2022-12-09 02:34:50,700   INFO  **********************Start training waymo_models/gen2DSS/centerpoint_voxset_1x_gen2dss_hybrid_train100_testSI1_lr0006_smpW1(default)**********************
+2022-12-13 06:17:14,717   INFO  **********************End training waymo_models/gen2DSS/centerpoint_voxset_1x_gen2dss_hybrid_train100_testSI1_lr0006_smpW1(default)**********************
+
+
+
+2022-12-13 06:17:14,717   INFO  **********************Start evaluation waymo_models/gen2DSS/centerpoint_voxset_1x_gen2dss_hybrid_train100_testSI1_lr0006_smpW1(default)**********************
+2022-12-13 06:17:14,718   INFO  Loading Waymo dataset
+2022-12-13 06:17:55,401   INFO  Total skipped info 0
+2022-12-13 06:17:55,401   INFO  Total samples for Waymo dataset: 39987
+2022-12-13 06:17:55,401   INFO  prepairing pose table for multi-sweeps data
+2022-12-13 06:17:55,487   INFO  ==> Loading parameters from checkpoint /scratch/cluster/yanght/Projects/Amazon/OpenPCDet/BEVGen/Baseline/VoxSeT_exp/VoxSeT_dev3/output/waymo_models/gen2DSS/centerpoint_voxset_1x_gen2dss_hybrid_train100_testSI1_lr0006_smpW1/default/ckpt/checkpoint_epoch_30.pth to CPU
+2022-12-13 06:18:01,810   INFO  ==> Checkpoint trained from version: none
+2022-12-13 06:18:01,897   INFO  ==> Done (loaded 591/591)
+2022-12-13 06:18:01,912   INFO  *************** EPOCH 30 EVALUATION *****************
+2022-12-13 06:37:05,626   INFO  *************** Performance of EPOCH 30 *****************
+2022-12-13 06:37:05,626   INFO  Generate label finished(sec_per_example: 0.0286 second).
+2022-12-13 06:37:05,627   INFO  recall_roi_0.3: 0.000000
+2022-12-13 06:37:05,627   INFO  recall_rcnn_0.3: 0.848979
+2022-12-13 06:37:05,627   INFO  recall_roi_0.5: 0.000000
+2022-12-13 06:37:05,627   INFO  recall_rcnn_0.5: 0.806706
+2022-12-13 06:37:05,627   INFO  recall_roi_0.7: 0.000000
+2022-12-13 06:37:05,627   INFO  recall_rcnn_0.7: 0.570117
+2022-12-13 06:37:05,649   INFO  Average predicted number of objects(39987 samples): 123.529
+2022-12-13 08:27:07,579   INFO  
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_1/AP: 0.7829 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_1/APH: 0.7782 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_1/APL: 0.7829 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_2/AP: 0.7023 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_2/APH: 0.6980 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_2/APL: 0.7023 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_1/AP: 0.8105 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_1/APH: 0.7412 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_1/APL: 0.8105 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_2/AP: 0.7361 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_2/APH: 0.6713 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_2/APL: 0.7361 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_1/AP: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_1/APH: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_1/APL: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_2/AP: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_2/APH: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_2/APL: 0.0000 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_1/AP: 0.7457 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_1/APH: 0.7335 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_1/APL: 0.7457 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/AP: 0.7190 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/APH: 0.7072 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/APL: 0.7190 
+
+2022-12-13 08:27:07,601   INFO  Result is save to /scratch/cluster/yanght/Projects/Amazon/OpenPCDet/BEVGen/Baseline/VoxSeT_exp/VoxSeT_dev3/output/waymo_models/gen2DSS/centerpoint_voxset_1x_gen2dss_hybrid_train100_testSI1_lr0006_smpW1/default/eval/eval_with_train/epoch_30/val
+2022-12-13 08:27:07,601   INFO  ****************Evaluation done.*****************
+2022-12-13 08:27:07,700   INFO  Epoch 30 has been evaluated
+2022-12-13 08:27:37,737   INFO  **********************End evaluation waymo_models/gen2DSS/centerpoint_voxset_1x_gen2dss_hybrid_train100_testSI1_lr0006_smpW1(default)**********************
